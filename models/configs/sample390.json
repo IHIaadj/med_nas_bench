@@ -1,0 +1,124 @@
+{
+    "id": 390,
+    "name": "unet_like_model_390",
+    "metrics": {
+        "dcs": 0.8989589108619,
+        "jcs": 0.8064207806094814,
+        "sensitivity": 0.6100420945842007,
+        "specificity": 0.6085918938033175
+    },
+    "params": 15943970,
+    "model_size": 15943970,
+    "arch_config": {
+        "blocks": [
+            {
+                "name": "UnetSkipConnectionBlock",
+                "type": "inner",
+                "pool": {},
+                "conv1": {
+                    "name": "Contract",
+                    "in_channels": 169,
+                    "out_channels": 338,
+                    "kernel_size": 5,
+                    "stride": 1,
+                    "dilation": [
+                        2,
+                        2
+                    ],
+                    "use_bn": false,
+                    "act_func": "relu",
+                    "order": 2
+                },
+                "conv2": {
+                    "name": "Contract",
+                    "in_channels": 338,
+                    "out_channels": 338,
+                    "kernel_size": 5,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": false,
+                    "act_func": "relu",
+                    "order": 2
+                },
+                "conv3": {},
+                "conv4": {},
+                "upconv": {
+                    "name": "TransposeConv2D",
+                    "in_channels": 338,
+                    "out_channels": 169,
+                    "kernel_size": 2,
+                    "stride": 2
+                }
+            },
+            {
+                "name": "UnetSkipConnectionBlock",
+                "type": "outer",
+                "pool": {},
+                "conv1": {
+                    "name": "Contract",
+                    "in_channels": 1,
+                    "out_channels": 169,
+                    "kernel_size": 5,
+                    "stride": 1,
+                    "dilation": [
+                        2,
+                        2
+                    ],
+                    "use_bn": false,
+                    "act_func": "relu",
+                    "order": 2
+                },
+                "conv2": {
+                    "name": "Contract",
+                    "in_channels": 169,
+                    "out_channels": 169,
+                    "kernel_size": 5,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": false,
+                    "act_func": "relu",
+                    "order": 2
+                },
+                "conv3": {
+                    "name": "Expand",
+                    "in_channels": 338,
+                    "out_channels": 169,
+                    "kernel_size": 5,
+                    "stride": 1,
+                    "dilation": [
+                        2,
+                        2
+                    ],
+                    "act_func": "relu",
+                    "order": 1
+                },
+                "conv4": {
+                    "name": "Expand",
+                    "in_channels": 169,
+                    "out_channels": 169,
+                    "kernel_size": 5,
+                    "stride": 1,
+                    "dilation": [
+                        2,
+                        2
+                    ],
+                    "act_func": "LeakyRelu",
+                    "order": 2
+                },
+                "upconv": {
+                    "name": "Contract",
+                    "in_channels": 169,
+                    "out_channels": 3,
+                    "kernel_size": 1,
+                    "stride": 1
+                }
+            }
+        ]
+    }
+}

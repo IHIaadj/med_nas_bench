@@ -1,0 +1,131 @@
+{
+    "id": 752,
+    "name": "unet_like_model_752",
+    "metrics": {
+        "dcs": 0.7151284368135786,
+        "jcs": 0.6783625874879695,
+        "sensitivity": 0.6882523143619426,
+        "specificity": 0.4160727236881526
+    },
+    "params": 475827,
+    "model_size": 475827,
+    "arch_config": {
+        "blocks": [
+            {
+                "name": "UnetSkipConnectionBlock",
+                "type": "inner",
+                "pool": {
+                    "name": "PoolingLayer",
+                    "in_channels": 48,
+                    "out_channels": 96,
+                    "pool_type": "avg",
+                    "kernel_size": 2,
+                    "stride": 2
+                },
+                "conv1": {
+                    "name": "Contract",
+                    "in_channels": 48,
+                    "out_channels": 96,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": true,
+                    "act_func": "relu6",
+                    "order": 3
+                },
+                "conv2": {
+                    "name": "Contract",
+                    "in_channels": 96,
+                    "out_channels": 96,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": true,
+                    "act_func": "relu",
+                    "order": 3
+                },
+                "conv3": {},
+                "conv4": {},
+                "upconv": {
+                    "name": "TransposeConv2D",
+                    "in_channels": 96,
+                    "out_channels": 48,
+                    "kernel_size": 2,
+                    "stride": 2
+                }
+            },
+            {
+                "name": "UnetSkipConnectionBlock",
+                "type": "outer",
+                "pool": {},
+                "conv1": {
+                    "name": "Contract",
+                    "in_channels": 1,
+                    "out_channels": 48,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": true,
+                    "act_func": "relu6",
+                    "order": 3
+                },
+                "conv2": {
+                    "name": "Contract",
+                    "in_channels": 48,
+                    "out_channels": 48,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": true,
+                    "act_func": "relu",
+                    "order": 3
+                },
+                "conv3": {
+                    "name": "Expand",
+                    "in_channels": 96,
+                    "out_channels": 48,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        2,
+                        2
+                    ],
+                    "act_func": "relu",
+                    "order": 2
+                },
+                "conv4": {
+                    "name": "Expand",
+                    "in_channels": 48,
+                    "out_channels": 48,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        2,
+                        2
+                    ],
+                    "act_func": "relu",
+                    "order": 3
+                },
+                "upconv": {
+                    "name": "Contract",
+                    "in_channels": 48,
+                    "out_channels": 3,
+                    "kernel_size": 1,
+                    "stride": 1
+                }
+            }
+        ]
+    }
+}

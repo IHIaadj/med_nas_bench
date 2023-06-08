@@ -1,0 +1,131 @@
+{
+    "id": 537,
+    "name": "unet_like_model_537",
+    "metrics": {
+        "dcs": 0.7847576273765167,
+        "jcs": 0.4830863620567476,
+        "sensitivity": 0.6464276120463417,
+        "specificity": 0.5033536174681864
+    },
+    "params": 53139,
+    "model_size": 53139,
+    "arch_config": {
+        "blocks": [
+            {
+                "name": "UnetSkipConnectionBlock",
+                "type": "inner",
+                "pool": {
+                    "name": "PoolingLayer",
+                    "in_channels": 16,
+                    "out_channels": 32,
+                    "pool_type": "avg",
+                    "kernel_size": 2,
+                    "stride": 2
+                },
+                "conv1": {
+                    "name": "Contract",
+                    "in_channels": 16,
+                    "out_channels": 32,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": false,
+                    "act_func": "LeakyRelu",
+                    "order": 3
+                },
+                "conv2": {
+                    "name": "Contract",
+                    "in_channels": 32,
+                    "out_channels": 32,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": false,
+                    "act_func": "relu",
+                    "order": 3
+                },
+                "conv3": {},
+                "conv4": {},
+                "upconv": {
+                    "name": "TransposeConv2D",
+                    "in_channels": 32,
+                    "out_channels": 16,
+                    "kernel_size": 2,
+                    "stride": 2
+                }
+            },
+            {
+                "name": "UnetSkipConnectionBlock",
+                "type": "outer",
+                "pool": {},
+                "conv1": {
+                    "name": "Contract",
+                    "in_channels": 1,
+                    "out_channels": 16,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": false,
+                    "act_func": "LeakyRelu",
+                    "order": 3
+                },
+                "conv2": {
+                    "name": "Contract",
+                    "in_channels": 16,
+                    "out_channels": 16,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "use_bn": false,
+                    "act_func": "relu",
+                    "order": 3
+                },
+                "conv3": {
+                    "name": "Expand",
+                    "in_channels": 32,
+                    "out_channels": 16,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "act_func": "relu",
+                    "order": 3
+                },
+                "conv4": {
+                    "name": "Expand",
+                    "in_channels": 16,
+                    "out_channels": 16,
+                    "kernel_size": 3,
+                    "stride": 1,
+                    "dilation": [
+                        1,
+                        1
+                    ],
+                    "act_func": "LeakyRelu",
+                    "order": 2
+                },
+                "upconv": {
+                    "name": "Contract",
+                    "in_channels": 16,
+                    "out_channels": 3,
+                    "kernel_size": 1,
+                    "stride": 1
+                }
+            }
+        ]
+    }
+}
